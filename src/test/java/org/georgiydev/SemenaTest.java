@@ -23,7 +23,7 @@ public class SemenaTest {
     @BeforeAll
     public static void openBrowser() {
         Configuration.browser = "edge";
-        Configuration.holdBrowserOpen=true;
+
         Selenide.open("https://semena-partner.ru/");
     }
     @Test
