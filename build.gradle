@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.georgiydev'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.10.2',
+            'org.junit.jupiter:junit-jupiter-engine:5.10.2',
+            'org.slf4j:slf4j-simple:2.0.13',
+            'com.codeborne:selenide:7.3.3')
+}
+
+test {
+    useJUnitPlatform()
+}
