@@ -9,6 +9,11 @@ repositories {
     mavenCentral()
 }
 
+javadoc {
+    classpath += sourceSets.test.compileClasspath
+    source += sourceSets.test.allJava
+}
+
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.10.2',
             'org.junit.jupiter:junit-jupiter-engine:5.10.2',
