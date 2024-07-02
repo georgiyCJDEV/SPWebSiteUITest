@@ -15,6 +15,7 @@ public class SelenideSetup {
     private String browser;
     private Boolean holdBrowserOpen;
     private String browserSize;
+    private Boolean maximize;
 
     /**
      * В конструкторе вызывается метод loadProperties()
@@ -33,14 +34,24 @@ public class SelenideSetup {
     private void loadProperties(String filepath) {
         PropertiesParser propertiesParser = new PropertiesParser(filepath);
 
-        // Установление значения статическому полю browser
+        // Установление значения полю browser
         browser = propertiesParser.parseBrowser();
-        // Установление значения статическому булевому полю holdBrowserOpen
+        if(browser == null) {
+            throw new RuntimeException("Browser property not found");
+        }
+
+        // Установление значения булевому полю holdBrowserOpen
         holdBrowserOpen = propertiesParser.parseHoldBrowserOpen();
-        // Установление значения статическому полю browserSize
+        // Установление значения полю browserSize
         browserSize = propertiesParser.parseBrowserSize();
-        // Установление значение статическому полю url
+        // Установление значения полю url
         url = propertiesParser.parseUrl();
+        if(url == null) {
+            throw new RuntimeException("Url property not found");
+        }
+
+        // Устанаовление значения полю maximize
+        maximize = propertiesParser.parseMaximize();
     }
 
     /**
@@ -50,8 +61,10 @@ public class SelenideSetup {
     private void configure()
     {
         Configuration.browser = browser;
-        Configuration.holdBrowserOpen = holdBrowserOpen;
-        Configuration.browserSize = browserSize;
+        Configuration.holdBrowserOpen = holdBrowserOpen != null ? holdBrowserOpen : false;
+        Configuration.browserSize = browserSize != null ? browserSize : "1920x1080";
+
+        maximize = maximize != null ? maximize : false;
     }
 
     /**
@@ -60,5 +73,10 @@ public class SelenideSetup {
     public void openUrl()
     {
         Selenide.open(url);
+
+        // Если maximize == true открываем браузер в полноэкранном режиме
+        if(maximize) {
+            WebDriverRunner.getWebDriver().manage().window().maximize();
+        }
     }
 }

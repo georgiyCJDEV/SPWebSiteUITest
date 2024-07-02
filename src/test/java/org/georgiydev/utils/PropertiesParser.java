@@ -55,6 +55,15 @@ public class PropertiesParser {
     }
 
     /**
+     * Парсинг свойства для теста в полноэкранном режиме
+     * @return Полноэкранный режим
+     */
+    public Boolean parseMaximize()
+    {
+        return Boolean.parseBoolean(parse("maximize"));
+    }
+
+    /**
      * Метод парсинга свойств из конфигурационного файла
      * @param propertyName Название свойства
      * @return Значение свойства
