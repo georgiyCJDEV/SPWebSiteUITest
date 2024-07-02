@@ -11,7 +11,9 @@ import org.georgiydev.utils.PropertiesParser;
  */
 public class SelenideSetup {
     // Объект класса SelenideSetup
-    private static SelenideSetup instance;
+    // ключевое слово volatile позволяет обновлять значения переменной
+    // в других потоках
+    private volatile static SelenideSetup instance;
     /**
      * Вызывается метод loadConfiguration()
      * для загрузки конфигураций из файла
@@ -19,6 +21,23 @@ public class SelenideSetup {
     private SelenideSetup()
     {
         loadConfiguration();
+    }
+
+    /**
+     Если объект не был инициализирован - вызываем конструктор и возвращаем объект,
+     если объект проинициализирован - возвращаем объект
+     */
+    public static SelenideSetup getInstance() {
+        if (instance == null) {
+            // synchronized позволяет только одному потоку полностью выполнять требуемую задачу
+            synchronized (SelenideSetup.class) {
+                if(instance==null)
+                {
+                    instance = new SelenideSetup();
+                }
+            }
+        }
+        return instance;
     }
 
     /**
@@ -32,15 +51,6 @@ public class SelenideSetup {
         Configuration.holdBrowserOpen=PropertiesParser.parseHoldBrowserOpen();
         // Установление значение статическому полю browserSize класса Configuration для Selenide
         Configuration.browserSize=PropertiesParser.parseBrowserSize();
-    }
-
-    /**
-     Если объект не был инициализирован - вызываем конструктор и возвращаем объект,
-     если объект проинициализируем - возвращаем объект
-     */
-    public static SelenideSetup getInstance()
-    {
-        return instance = instance == null ? new SelenideSetup() : instance;
     }
 
     /**
