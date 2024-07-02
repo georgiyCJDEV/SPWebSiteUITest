@@ -1,5 +1,7 @@
 package org.georgiydev.utils;
 
+import lombok.Setter;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -11,13 +13,16 @@ import java.util.Properties;
  */
 public class PropertiesParser {
     // Путь до конфигурационного файла
-   private static final String filepath = "./src/test/resources/testConfig.properties";
+   private static String filepath;
 
+    public PropertiesParser(String _filepath) {
+        filepath = _filepath;
+    }
     /**
      * Парсинг строки браузера из конфигурационного файла
      * @return Название браузера
      */
-    public static String parseBrowser()
+    public String parseBrowser()
     {
         return parse("browser");
     }
@@ -26,7 +31,7 @@ public class PropertiesParser {
      * Парсинг строки со ссылкой на сайт из конфигурационного файла
       * @return Ссылка на сайт
      */
-    public static String parseUrl()
+    public String parseUrl()
     {
         return parse("url");
     }
@@ -35,7 +40,7 @@ public class PropertiesParser {
      * Парсинг строки с булевым параметром удержания открытого браузера
      * @return Удерживать ли браузер открытым после выполнения тестов
      */
-    public static Boolean parseHoldBrowserOpen()
+    public Boolean parseHoldBrowserOpen()
     {
         return Boolean.parseBoolean(parse("holdBrowserOpen"));
     }
@@ -44,7 +49,7 @@ public class PropertiesParser {
      * Парсинг размеров окна открываемого браузера
      * @return Размеры окна (Ширина x Высота)
      */
-    public static String parseBrowserSize()
+    public String parseBrowserSize()
     {
         return parse("browserSize");
     }

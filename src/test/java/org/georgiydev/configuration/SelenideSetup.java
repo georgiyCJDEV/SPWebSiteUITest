@@ -2,70 +2,63 @@ package org.georgiydev.configuration;
 
 import com.codeborne.selenide.*;
 
-import com.codeborne.selenide.webdriver.DriverFactory;
+import lombok.Getter;
 import org.georgiydev.utils.PropertiesParser;
-import org.openqa.selenium.MutableCapabilities;
-import org.openqa.selenium.Proxy;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.io.File;
 
 /**
- * Singleton для взаимодействия с конфигурационным файлом и прочими
+ * Класс для взаимодействия с конфигурационным файлом и прочими
  * параметрами заданными через ресурс-файл testConfig.properties
  */
+@Getter
 public class SelenideSetup {
-    // Объект класса SelenideSetup
-    // ключевое слово volatile позволяет обновлять значения переменной
-    // в других потоках
-    private volatile static SelenideSetup instance;
+    private String url;
+    private String browser;
+    private Boolean holdBrowserOpen;
+    private String browserSize;
+
     /**
-     * Вызывается метод loadConfiguration()
-     * для загрузки конфигураций из файла
+     * В конструкторе вызывается метод loadProperties()
+     * для загрузки значений для тестирования из файла и конфигурации Selenide
      */
-    private SelenideSetup()
+    public SelenideSetup(String filepath)
     {
-        loadConfiguration();
+        this.loadProperties(filepath);
+        this.configure();
     }
 
     /**
-     Если объект не был инициализирован - вызываем конструктор и возвращаем объект,
-     если объект проинициализирован - возвращаем объект
+     * Метод для загрузки свойств из файла свойств для тестирования
+     * @param filepath путь до properties файла
      */
-    public static SelenideSetup getInstance() {
-        if (instance == null) {
-            // synchronized позволяет только одному потоку полностью выполнять требуемую задачу
-            synchronized (SelenideSetup.class) {
-                if(instance==null)
-                {
-                    instance = new SelenideSetup();
-                }
-            }
-        }
-        return instance;
+    private void loadProperties(String filepath) {
+        PropertiesParser propertiesParser = new PropertiesParser(filepath);
+
+        // Установление значения статическому полю browser
+        browser = propertiesParser.parseBrowser();
+        // Установление значения статическому булевому полю holdBrowserOpen
+        holdBrowserOpen = propertiesParser.parseHoldBrowserOpen();
+        // Установление значения статическому полю browserSize
+        browserSize = propertiesParser.parseBrowserSize();
+        // Установление значение статическому полю url
+        url = propertiesParser.parseUrl();
     }
 
     /**
-     * Метод загрузки конфигурации, обращение к методам вспомогательного класса PropertiesParser,
-     * парсящего файл testConfig.properties в директории resources
+     * Конфигурация Selenide, поля класса Configuration заполняются
+     * полученными из файла значениями
      */
-    private static void loadConfiguration() {
-        // Установление значение статическому полю browser класса Configuration для Selenide
-        Configuration.browser = PropertiesParser.parseBrowser();
-        // Установление значение статическому полю holdBrowserOpen класса Configuration для Selenide
-        Configuration.holdBrowserOpen=PropertiesParser.parseHoldBrowserOpen();
-        // Установление значение статическому полю browserSize класса Configuration для Selenide
-        Configuration.browserSize=PropertiesParser.parseBrowserSize();
+    private void configure()
+    {
+        Configuration.browser = browser;
+        Configuration.holdBrowserOpen = holdBrowserOpen;
+        Configuration.browserSize = browserSize;
     }
 
     /**
-     * Открывает сайт по ссылке заданной в конфигурационном файле
+     * Открывает сайт по ссылке заданной в файле свойств для тестирования
      */
     public void openUrl()
     {
-        Selenide.open(PropertiesParser.parseUrl());
+        Selenide.open(url);
     }
 }
