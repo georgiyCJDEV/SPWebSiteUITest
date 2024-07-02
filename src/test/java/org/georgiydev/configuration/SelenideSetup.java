@@ -37,7 +37,7 @@ public class SelenideSetup {
         // Установление значения полю browser
         browser = propertiesParser.parseBrowser();
         if(browser == null) {
-            throw new RuntimeException("Browser property not found");
+            throw new RuntimeException("Browser property not found, the tests won't run.");
         }
 
         // Установление значения булевому полю holdBrowserOpen
@@ -47,7 +47,7 @@ public class SelenideSetup {
         // Установление значения полю url
         url = propertiesParser.parseUrl();
         if(url == null) {
-            throw new RuntimeException("Url property not found");
+            throw new RuntimeException("Url property not found, the tests won't run.");
         }
 
         // Устанаовление значения полю maximize
