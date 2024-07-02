@@ -70,10 +70,10 @@ public class SemenaTest {
     }
 
     /**
-     * Закрытие браузера после выполнения тестов
+     * Закрытие браузера после выполнения каждого теста
      */
-    @AfterAll
-    public static void closeBrowser()
+    @AfterEach
+    public void closeBrowser()
     {
         Selenide.closeWebDriver();
     }
