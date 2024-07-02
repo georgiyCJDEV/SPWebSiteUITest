@@ -1,6 +1,7 @@
 package org.georgiydev;
 
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.WebDriverRunner;
 import org.georgiydev.configuration.SelenideSetup;
 import org.junit.jupiter.api.*;
 
@@ -21,16 +22,26 @@ import static com.codeborne.selenide.Selenide.*;
 public class SemenaTest {
     private static SelenideSetup selenideSetup;
     /**
-     * Подготовка к тестам
+     * Конфигурация Selenide перед всеми тестами
      */
     @BeforeAll
-    public static void setUp() {
+    public static void setUpProperties() {
         // Загрузка конфигураций для Selenide из файла testConfig.properties
         // в директории resources
         selenideSetup = SelenideSetup.getInstance();
+    }
 
-        // Закрытие открытого браузера перед запуском тестов
-        Selenide.closeWebDriver();
+    /**
+     * Подготовка перед каждым тестом
+     * Закрытие браузера если он открыт
+     */
+    @BeforeEach
+    public void prepareTests()
+    {
+        // Если браузер открыт, закрываем его перед запуском теста
+        if(WebDriverRunner.hasWebDriverStarted()) {
+            Selenide.closeWebDriver();
+        }
     }
 
     /**
@@ -73,7 +84,7 @@ public class SemenaTest {
      * Закрытие браузера после выполнения каждого теста
      */
     @AfterEach
-    public void closeBrowser()
+    public void closeBrowserInstance()
     {
         Selenide.closeWebDriver();
     }

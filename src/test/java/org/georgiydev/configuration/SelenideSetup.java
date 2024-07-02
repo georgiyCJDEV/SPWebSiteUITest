@@ -1,9 +1,17 @@
 package org.georgiydev.configuration;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.*;
 
+import com.codeborne.selenide.webdriver.DriverFactory;
 import org.georgiydev.utils.PropertiesParser;
+import org.openqa.selenium.MutableCapabilities;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
 
 /**
  * Singleton для взаимодействия с конфигурационным файлом и прочими
