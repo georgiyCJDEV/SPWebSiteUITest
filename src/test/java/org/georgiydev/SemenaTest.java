@@ -20,6 +20,7 @@ import static com.codeborne.selenide.Selenide.*;
  * 8. Проверяем информацию, что товар был удален и есть кнопка восстановить
  */
 public class SemenaTest {
+    // Путь до файла конфигураций в директории resources
     private static final String propertiesFilePath = "./src/test/resources/testConfig.properties";
     private static SelenideSetup selenideSetup;
     /**
@@ -27,8 +28,7 @@ public class SemenaTest {
      */
     @BeforeAll
     public static void setUpProperties() {
-        // Загрузка конфигураций для Selenide из файла testConfig.properties
-        // в директории resources
+        // Загрузка конфигураций для Selenide из файла
         selenideSetup = new SelenideSetup(propertiesFilePath);
     }
 
