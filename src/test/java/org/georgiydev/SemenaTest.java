@@ -64,7 +64,7 @@ public class SemenaTest {
         $x("//*[@id='VID-styler']/div[2]/ul/li[3]").click();
 
         // Нажимаем кпопку "Добавить в корзину" под одним из товаров
-        $x("//a[@data-id=\"53377\"][@class=\"Product_link add-btn ee\"]").click();
+        $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]//a[@class=\"Product_link add-btn ee\"]").click();
         // Проверяем что возле иконки корзины появилась 1 позиция
         $("[id=num_products]").shouldHave(text("1"));
         // Кликаем по иконке корзины для перехода в корзину
