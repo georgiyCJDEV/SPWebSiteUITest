@@ -31,6 +31,7 @@ public class PropertiesParser {
      * Парсинг строки со ссылкой на сайт из конфигурационного файла
       * @return Ссылка на сайт
      */
+    @Deprecated
     public String parseUrl()
     {
         return parse("url");

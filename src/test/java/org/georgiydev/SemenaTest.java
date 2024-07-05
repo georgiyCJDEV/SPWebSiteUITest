@@ -2,7 +2,10 @@ package org.georgiydev;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
-import org.georgiydev.configuration.SelenideSetup;
+import org.georgiydev.pages.CatalogPage;
+import org.georgiydev.pages.MainPage;
+import org.georgiydev.pages.PetuniasPage;
+import org.georgiydev.pages.ShoppingCartPage;
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Condition.*;
@@ -19,28 +22,15 @@ import static com.codeborne.selenide.Selenide.*;
  * 7. Удаляем через иконку мусорки
  * 8. Проверяем информацию, что товар был удален и есть кнопка восстановить
  */
-public class SemenaTest {
-    // Путь до файла конфигураций в директории resources
-    private static final String propertiesFilePath = "./src/test/resources/testConfig.properties";
-    private static SelenideSetup selenideSetup;
-    /**
-     * Конфигурация Selenide перед всеми тестами
-     */
-    @BeforeAll
-    public static void setUpProperties() {
-        // Загрузка конфигураций для Selenide из файла
-        selenideSetup = new SelenideSetup(propertiesFilePath);
-    }
-
+public class SemenaTest extends TestBase {
     /**
      * Подготовка перед каждым тестом
      * Закрытие браузера если он открыт
      */
     @BeforeEach
-    public void prepareTests()
-    {
+    public void closeBeforeTests() {
         // Если браузер открыт, закрываем его перед запуском теста
-        if(WebDriverRunner.hasWebDriverStarted()) {
+        if (WebDriverRunner.hasWebDriverStarted()) {
             Selenide.closeWebDriver();
         }
     }
@@ -49,44 +39,34 @@ public class SemenaTest {
      * Тест веб-сайта
      */
     @Test
-    public void websiteTest()
-    {
-        // Открываем сайт https://semena-partner.ru/,
-        // ссылку парсим из .src/test/resources/testConfig.properties
-        selenideSetup.openUrl();
+    public void websiteTest() {
+        // Основная страница
+        MainPage mainPage = new MainPage();
+        // Открытие сайта, выбор цветов в каталоге
+        mainPage.openUrl().chooseFlowers();
 
-        // В каталоге товаров кликаем по иконке цветов
-        $(".flowers-icon").click();
+        // Страница каталога
+        CatalogPage catalogPage = new CatalogPage();
+        // Выбор категории петунии в каталоге
+        catalogPage.selectCategoryPetunias();
 
-        // На открывшейся странице кликаем по дропдауну "Выберите категорию"
-        $("[class=jq-selectbox__select-text]").click();
-        // В появившемся дропдауне кликаем на категорию "Петуния"
-        $x("//*[@id='VID-styler']/div[2]/ul/li[3]").click();
+        // Страница петуний
+        PetuniasPage petuniasPage = new PetuniasPage();
+        // Проверка что страница загружена, добавление товара в корзину, проверка счётчика товаров возле иконки корзины,
+        //                                                              открытие корзины
+        petuniasPage.checkIfLoaded().addToCart().checkCount().openCart();
 
-        // Нажимаем кпопку "Добавить в корзину" под одним из товаров
-        $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]//a[@class=\"Product_link add-btn ee\"]").click();
-        // Проверяем что возле иконки корзины появилась 1 позиция
-        $("[id=num_products]").shouldHave(text("1"));
-        // Кликаем по иконке корзины для перехода в корзину
-        $x("//*[@id=\"bottom-wrapper\"]/a[1]").click();
-
-        // Кликаем по иконке мусорного бака для удаления товара из корзины
-        $("span.basket-item-actions-remove").click();
-        // Проверяем удалился ли товар (Не существует ли товар после нажатия иконки удаления)
-        $x("//*[@data-entity=\"basket-item-name\"]").shouldNotBe(exist);
-        // Проверяем существует ли элемент, показывающий то, что товар был удалён из корзины
-        $(".basket-items-list-item-notification-removed").shouldBe(exist);
-
-        // Проверяем появилась ли кнопка восстановить
-        $x("//*[@data-entity=\"basket-item-restore-button\"]").shouldBe(exist);
+        // Страница корзины
+        ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
+        // Удаление из корзины, проверка удаления, проверка сообщения об удалении, проверка наличия кнопки восстановления
+        shoppingCartPage.removeFromCart().checkIfRemoved().checkIfNotified().checkRecoverBtnAppears();
     }
 
     /**
      * Закрытие браузера после выполнения каждого теста
      */
     @AfterEach
-    public void closeBrowserInstance()
-    {
+    public void closeBrowserInstance() {
         Selenide.closeWebDriver();
     }
 }

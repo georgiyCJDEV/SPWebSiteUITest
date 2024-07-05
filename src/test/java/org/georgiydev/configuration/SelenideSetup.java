@@ -11,29 +11,31 @@ import org.georgiydev.utils.PropertiesParser;
  */
 @Getter
 public class SelenideSetup {
+    @Deprecated
     private String url;
     private String browser;
     private Boolean holdBrowserOpen;
     private String browserSize;
     private Boolean maximize;
 
+    private static PropertiesParser propertiesParser;
+
     /**
      * В конструкторе вызывается метод loadProperties()
      * для загрузки значений для тестирования из файла и конфигурации Selenide
+     * @param filepath путь до файла конфигураций
      */
     public SelenideSetup(String filepath)
     {
-        this.loadProperties(filepath);
+        propertiesParser = new PropertiesParser(filepath);
+        this.loadProperties();
         this.configure();
     }
 
     /**
      * Метод для загрузки свойств из файла свойств для тестирования
-     * @param filepath путь до properties файла
      */
-    private void loadProperties(String filepath) {
-        PropertiesParser propertiesParser = new PropertiesParser(filepath);
-
+    private void loadProperties() {
         // Установление значения полю browser
         browser = propertiesParser.parseBrowser();
         if(browser == null) {
@@ -44,14 +46,21 @@ public class SelenideSetup {
         holdBrowserOpen = propertiesParser.parseHoldBrowserOpen();
         // Установление значения полю browserSize
         browserSize = propertiesParser.parseBrowserSize();
-        // Установление значения полю url
+
+        // Устанаовление значения полю maximize
+        maximize = propertiesParser.parseMaximize();
+    }
+
+    /**
+     * Загрузка url
+     */
+    @Deprecated
+    private void loadUrlProperty()
+    {
         url = propertiesParser.parseUrl();
         if(url == null) {
             throw new RuntimeException("Url property not found, the tests won't run.");
         }
-
-        // Устанаовление значения полю maximize
-        maximize = propertiesParser.parseMaximize();
     }
 
     /**
@@ -65,11 +74,13 @@ public class SelenideSetup {
         Configuration.browserSize = browserSize != null ? browserSize : "1920x1080";
 
         maximize = maximize != null ? maximize : false;
+
     }
 
     /**
      * Открывает сайт по ссылке заданной в файле свойств для тестирования
      */
+    @Deprecated
     public void openUrl()
     {
         Selenide.open(url);
