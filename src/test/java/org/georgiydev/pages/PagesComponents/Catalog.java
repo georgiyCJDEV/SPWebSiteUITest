@@ -10,14 +10,13 @@ import static com.codeborne.selenide.Selenide.$x;
  * Класс для элемента - каталог
  */
 public class Catalog {
-    private static final SelenideElement catalogButton = $x("//div[@class=\"Wrapper Bottom-header_wrapper\"]/button[1]"),
-            flowersIcon = $(".flowers-icon");
+    private static final SelenideElement catalogButton = $x("//div[@class=\"Wrapper Bottom-header_wrapper\"]/button[1]");
 
     // Если иконка цветов не отображается на странице
-    public Catalog proceedToFlowers() {
-        if (!flowersIcon.is(exist) ||
-                !flowersIcon.is(visible) ||
-                !flowersIcon.is(clickable)) {
+    public Catalog proceedToSection(SelenideElement neededSection) {
+        if (!neededSection.is(exist) ||
+                !neededSection.is(visible) ||
+                !neededSection.is(clickable)) {
             clickCatalogButton();
         }
 
@@ -30,8 +29,8 @@ public class Catalog {
     }
 
     // Клик по иконке цветов
-    public Catalog flowersClick() {
-        flowersIcon.click();
+    public Catalog sectionClick(SelenideElement neededSection) {
+        neededSection.click();
 
         return this;
     }

@@ -6,8 +6,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CategoriesDropdown {
-    private static final SelenideElement categoriesDropdown = $("[class=jq-selectbox__select-text]"),
-            neededCategory = $x("//*[@id='VID-styler']/div[2]/ul/li[3]");
+    private static final SelenideElement categoriesDropdown = $("[class=jq-selectbox__select-text]");
 
     public CategoriesDropdown clickCategories() {
         categoriesDropdown.click();
@@ -15,7 +14,7 @@ public class CategoriesDropdown {
         return this;
     }
 
-    public CategoriesDropdown selectCategory() {
+    public CategoriesDropdown selectCategory(SelenideElement neededCategory) {
         neededCategory.click();
 
         return this;
