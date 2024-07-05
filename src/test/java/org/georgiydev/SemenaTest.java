@@ -43,7 +43,8 @@ public class SemenaTest extends TestBase {
         // Основная страница
         MainPage mainPage = new MainPage();
         // Открытие сайта, выбор цветов в каталоге
-        mainPage.openUrl().chooseFlowers();
+        mainPage.openUrl()
+                .chooseFlowers();
 
         // Страница каталога
         CatalogPage catalogPage = new CatalogPage();
@@ -54,12 +55,18 @@ public class SemenaTest extends TestBase {
         PetuniasPage petuniasPage = new PetuniasPage();
         // Проверка что страница загружена, добавление товара в корзину, проверка счётчика товаров возле иконки корзины,
         //                                                              открытие корзины
-        petuniasPage.checkIfLoaded().addToCart().checkCount().openCart();
+        petuniasPage.checkIfLoaded()
+                .addToCart()
+                .checkCount()
+                .openCart();
 
         // Страница корзины
         ShoppingCartPage shoppingCartPage = new ShoppingCartPage();
         // Удаление из корзины, проверка удаления, проверка сообщения об удалении, проверка наличия кнопки восстановления
-        shoppingCartPage.removeFromCart().checkIfRemoved().checkIfNotified().checkRecoverBtnAppears();
+        shoppingCartPage.removeFromCart()
+                .checkIfRemoved()
+                .checkIfNotified()
+                .checkRecoverBtnAppears();
     }
 
     /**

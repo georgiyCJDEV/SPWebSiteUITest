@@ -20,7 +20,8 @@ public class CatalogPage extends Page {
     public Page selectCategoryPetunias() {
         CategoriesDropdown dropdown = new CategoriesDropdown();
         // Клик по дропдауну и клик по категории
-        dropdown.clickCategories().selectCategory();
+        dropdown.clickCategories()
+                .selectCategory();
 
         return this;
     }

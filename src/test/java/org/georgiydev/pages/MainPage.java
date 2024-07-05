@@ -22,7 +22,8 @@ public class MainPage extends Page {
     public MainPage chooseFlowers() {
         Catalog catalog = new Catalog();
         // Переход к цветам и клик по иконке цветов в каталоге
-        catalog.proceedToFlowers().flowersClick();
+        catalog.proceedToFlowers()
+                .flowersClick();
 
         return this;
     }
