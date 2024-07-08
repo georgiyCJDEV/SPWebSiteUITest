@@ -3,13 +3,12 @@ package org.georgiydev.pages.PagesComponents;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class CategoriesDropdown {
-    private static final SelenideElement categoriesDropdown = $("[class=jq-selectbox__select-text]");
+    private static final SelenideElement CATEGORIES_DROPDOWN = $("[class=jq-selectbox__select-text]");
 
     public CategoriesDropdown clickCategories() {
-        categoriesDropdown.click();
+        CATEGORIES_DROPDOWN.click();
 
         return this;
     }

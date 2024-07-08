@@ -2,7 +2,6 @@ package org.georgiydev.pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.conditions.Visible;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
@@ -15,42 +14,42 @@ import static com.codeborne.selenide.Selenide.$x;
  * 6. Открываем корзину
  */
 public class PetuniasPage extends Page {
-    private static final String url = "https://semena-partner.ru/catalog/tsvety/odnoletnie/petuniya/";
-    private static final SelenideElement addToCartButton = $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]//a[@class=\"Product_link add-btn ee\"]"),
-            cartItemsCounter = $("[id=num_products]"),
-            openCartButton = $x("//*[@id=\"bottom-wrapper\"]/a[1]"),
-            productName = $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]/div[@class=\"Product_content\"]/a/div[@itemprop=\"name\"][text()[contains(.,\"Петуния\")]]");
+    private static final String URL = "https://semena-partner.ru/catalog/tsvety/odnoletnie/petuniya/";
+    private static final SelenideElement ADD_TO_CART_BUTTON = $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]//a[@class=\"Product_link add-btn ee\"]"),
+            CART_ITEMS_COUNTER = $("[id=num_products]"),
+            OPEN_CART_BUTTON = $x("//*[@id=\"bottom-wrapper\"]/a[1]"),
+            PRODUCT_NAME = $x("//div[@class=\"catalog-wrap\"]/div[@class=\"Product\"]/div[1]/div[@class=\"Product_content\"]/a/div[@itemprop=\"name\"][text()[contains(.,\"Петуния\")]]");
 
     @Override
     public Page openUrl() {
-        Selenide.open(url);
+        Selenide.open(URL);
 
         return this;
     }
 
     // Проверка загрузилась ли страница после выбора петуний в фильтре
     public PetuniasPage checkIfLoaded() {
-        productName.shouldBe(exist);
+        PRODUCT_NAME.shouldBe(exist);
         return this;
     }
 
     // Клик по кнопке добавить в корзину
     public PetuniasPage addToCart() {
-        addToCartButton.click();
+        ADD_TO_CART_BUTTON.click();
 
         return this;
     }
 
     // Проверка счётчика товаров в корзине
     public PetuniasPage checkCount() {
-        cartItemsCounter.shouldHave(text("1"));
+        CART_ITEMS_COUNTER.shouldHave(text("1"));
 
         return this;
     }
 
     // Клик по кнопке открытия корзины
     public PetuniasPage openCart() {
-        openCartButton.click();
+        OPEN_CART_BUTTON.click();
 
         return this;
     }

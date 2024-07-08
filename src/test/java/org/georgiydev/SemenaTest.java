@@ -6,10 +6,9 @@ import org.georgiydev.pages.CatalogPage;
 import org.georgiydev.pages.MainPage;
 import org.georgiydev.pages.PetuniasPage;
 import org.georgiydev.pages.ShoppingCartPage;
-import org.junit.jupiter.api.*;
-
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Класс для теста последовательности действий:

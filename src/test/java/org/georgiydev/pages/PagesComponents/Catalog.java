@@ -3,14 +3,13 @@ package org.georgiydev.pages.PagesComponents;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 /**
  * Класс для элемента - каталог
  */
 public class Catalog {
-    private static final SelenideElement catalogButton = $x("//div[@class=\"Wrapper Bottom-header_wrapper\"]/button[1]");
+    private static final SelenideElement CATALOG_BUTTON = $x("//div[@class=\"Wrapper Bottom-header_wrapper\"]/button[1]");
 
     // Если иконка цветов не отображается на странице
     public Catalog proceedToSection(SelenideElement neededSection) {
@@ -25,7 +24,7 @@ public class Catalog {
 
     // Клик по кнопке каталога
     public void clickCatalogButton() {
-        catalogButton.click();
+        CATALOG_BUTTON.click();
     }
 
     // Клик по иконке цветов
