@@ -8,7 +8,8 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 /**
- * 7. Удаляем через иконку мусорки
+ * Страница корзины <hr>
+ * 7. Удаляем через иконку мусорки <br>
  * 8. Проверяем информацию, что товар был удален и есть кнопка восстановить
  */
 public class ShoppingCartPage extends Page {
@@ -25,26 +26,42 @@ public class ShoppingCartPage extends Page {
         return this;
     }
 
-    // Клик по кнопке удаления товара из корзины
-    public ShoppingCartPage removeFromCart() {
+    /**
+     * Проверить что товар находится в корзине
+     */
+    public ShoppingCartPage checkIfItemIsInCart() {
+        CART_ITEM_NAME.shouldBe(exist);
+        return this;
+    }
+
+    /**
+     * Клик по кнопке удаления товара из корзины
+     */
+    public ShoppingCartPage clickRemoveFromCartButton() {
         REMOVE_FROM_CART_BUTTON.click();
         return this;
     }
 
-    // Проверка что товара нет в корзине
-    public ShoppingCartPage checkIfRemoved() {
+    /**
+     * Проверить что товара нет в корзине
+     */
+    public ShoppingCartPage checkIfItemRemoved() {
         CART_ITEM_NAME.shouldNotBe(exist);
         return this;
     }
 
-    // Проверка что появилось сообщение об удалении
-    public ShoppingCartPage checkIfNotified() {
+    /**
+     * Проверить что появилось сообщение об удалении
+     */
+    public ShoppingCartPage checkIfNotificationAppeared() {
         REMOVE_NOTIFIER.shouldBe(exist);
         return this;
     }
 
-    // Проверка что появилась кнопка "восстановить"
-    public ShoppingCartPage checkRecoverBtnAppears() {
+    /**
+     * Проверить что появилась кнопка "Восстановить"
+     */
+    public ShoppingCartPage checkIfRecoverButtonAppeared() {
         RECOVER_BUTTON.shouldBe(exist);
         return this;
     }

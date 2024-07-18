@@ -7,11 +7,15 @@ import org.georgiydev.pages.PagesComponents.CategoriesDropdown;
 import static com.codeborne.selenide.Selenide.$x;
 
 /**
+ * Страница каталога <hr>
  * 3. В фильтре выбираем Категория = Петунья
  */
 public class CatalogPage extends Page {
     private static final String URL = "https://semena-partner.ru/catalog/tsvety/";
     private static final SelenideElement PETUNIAS_CATEGORY = $x("//*[@id='VID-styler']/div[2]/ul/li[3]");
+
+    // Элемент дропдаун с категориями
+    private static final CategoriesDropdown dropdown = new CategoriesDropdown();
 
     @Override
     public Page openUrl() {
@@ -20,12 +24,12 @@ public class CatalogPage extends Page {
         return this;
     }
 
-    // Выбираем категорию петуния в фильтре
-    public Page selectCategoryPetunias() {
-        CategoriesDropdown dropdown = new CategoriesDropdown();
-        // Клик по дропдауну и клик по категории
-        dropdown.clickCategories()
-                .selectCategory(PETUNIAS_CATEGORY);
+    /**
+     * Выбрать категорию - петуния в фильтре
+     */
+    public Page openPetuniasCategory() {
+        dropdown.clickCategoriesDropdown()
+                .clickCategory(PETUNIAS_CATEGORY);
 
         return this;
     }

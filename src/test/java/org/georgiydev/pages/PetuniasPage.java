@@ -9,8 +9,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 /**
- * 4. Добавляем в корзину любую петунью
- * 5. Проверяем, что в верхнем правом окошке появилась 1 позиция
+ * Страница категории "Петунии" <hr>
+ * 4. Добавляем в корзину любую петунью <br>
+ * 5. Проверяем, что в верхнем правом окошке появилась 1 позиция <br>
  * 6. Открываем корзину
  */
 public class PetuniasPage extends Page {
@@ -27,28 +28,36 @@ public class PetuniasPage extends Page {
         return this;
     }
 
-    // Проверка загрузилась ли страница после выбора петуний в фильтре
-    public PetuniasPage checkIfLoaded() {
+    /**
+     * Проверить загрузилась ли страница после выбора петуний в фильтре
+     */
+    public PetuniasPage checkIfPageHasLoaded() {
         PRODUCT_NAME.shouldBe(exist);
         return this;
     }
 
-    // Клик по кнопке добавить в корзину
-    public PetuniasPage addToCart() {
+    /**
+     * Клик по кнопке добавить в корзину
+     */
+    public PetuniasPage clickAddToCartButton() {
         ADD_TO_CART_BUTTON.click();
 
         return this;
     }
 
-    // Проверка счётчика товаров в корзине
-    public PetuniasPage checkCount() {
+    /**
+     * Проверить счётчик товаров в корзине
+     */
+    public PetuniasPage checkCartQuantity() {
         CART_ITEMS_COUNTER.shouldHave(text("1"));
 
         return this;
     }
 
-    // Клик по кнопке открытия корзины
-    public PetuniasPage openCart() {
+    /**
+     * Кликнуть по кнопке открытия корзины
+     */
+    public PetuniasPage clickCartButton() {
         OPEN_CART_BUTTON.click();
 
         return this;

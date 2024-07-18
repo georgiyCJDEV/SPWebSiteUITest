@@ -7,14 +7,17 @@ import org.georgiydev.pages.PagesComponents.Catalog;
 import static com.codeborne.selenide.Selenide.$;
 
 /**
- * 1. Открываем интернет магазин
+ * Начальная страница сайта <hr>
+ * 1. Открываем интернет магазин <br>
  * 2. Выбираем Цветы в левом меню
  */
 public class MainPage extends Page {
     private static final String URL = "https://semena-partner.ru/";
     private static final SelenideElement FLOWERS_SECTION = $(".flowers-icon");
 
-    // Открываем сайт
+    // Элемент каталог с секциями
+    private static final Catalog catalog = new Catalog();
+
     @Override
     public MainPage openUrl() {
         Selenide.open(URL);
@@ -22,12 +25,12 @@ public class MainPage extends Page {
         return this;
     }
 
-    // Выбираем Цветы
-    public MainPage chooseFlowers() {
-        Catalog catalog = new Catalog();
-        // Переход к цветам и клик по иконке цветов в каталоге
+    /**
+     * Выбрать Цветы в левом меню
+     */
+    public MainPage openFlowersSection() {
         catalog.proceedToSection(FLOWERS_SECTION)
-                .sectionClick(FLOWERS_SECTION);
+                .clickSection(FLOWERS_SECTION);
 
         return this;
     }

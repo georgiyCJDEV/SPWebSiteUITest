@@ -7,6 +7,7 @@ import java.util.Properties;
 /**
  * Класс для парсинга свойств из конфигурационного файла:
  * ./src/test/resources/testConfig.properties
+ * <br>
  * Свойства в файле должны быть заданы в форме 'НазваниеСвойства=ЗначениеСвойства'
  */
 public class PropertiesParser {
